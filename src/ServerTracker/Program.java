@@ -1,50 +1,30 @@
 package ServerTracker;
 
-public class Program {
+public class Program extends AbstractEntity{
 
-	/*** START MEMBERS ***/
-	private static int numPrograms = 0;
-	private int programId;
-	private String programName;
-	//private String programDesc;
-	/*** END MEMBERS ***/
-	
+	//public Program() { super(); }
 
-	/*** START CONSTRUCTORS ***/
-	public Program(){ programId = incProgramCount(); }
-	
-	public Program(String name){
-		programId = incProgramCount();
-		programName = name;
-	}
-	
-	/*
-	public Program(int id, String name, String desc){
-		programId = id;
-		programName = name;
-		programDesc = desc;
-	}
-	*/
-	/*** END CONSTRUCTORS ***/
-	
+	public Program(int id){ super(id); }
+	public Program(String name) { super(name); }
+	public Program(int id, String name){ super(id,name); }
 	
 	
 	/*** START METHODS ***/	
-	public int getProgramId() { return programId; }
-	public String getProgramName() { return programName; }
-	public void setProgramName(String programName) { this.programName = programName; }
+	public int getProgramId() { return this.getEntityId(); }
+	public void setProgramId(int id) { this.setEntityId(id); }
+	public String getProgramName() { return this.getEntityName(); }
+	public void setProgramName(String programName) { this.setEntityName(programName); }
 	
-	protected int incProgramCount(){ return ++numPrograms; }
 	
-	public void printProgram(){
-		System.out.println("\tPID:\t" + getProgramId());
-		System.out.println("\tName:\t" + getProgramName() + "\n");
+	public void printProgram(){ 
+		System.out.print("Program ");
+		this.printEntity(); 
 	}
 	
 	/*
-	public void setProgramId(int programId) { this.programId = programId; }
-	public String getProgramDesc() { return programDesc; }
-	public void setProgramDesc(String programDesc) { this.programDesc = programDesc; }
+	public void setEntityId(int programId) { this.entityId = programId; }
+	public String getEntityDesc() { return entityDesc; }
+	public void setEntityDesc(String entityDesc) { this.entityDesc = entityDesc; }
 	*/
 	/*** END METHODS ***/
 }

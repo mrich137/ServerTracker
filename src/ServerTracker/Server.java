@@ -3,58 +3,43 @@ package ServerTracker;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server {
+public class Server extends AbstractEntity{
 	
 	/*** START MEMBERS ***/
-	private static int numServers = 0;
-	private int serverId;
-	private String serverName;
 	private String serverIp;
 	private List<Program> programList = new ArrayList<Program>();
-	//private String serverDesc;
 	/*** END MEMBERS ***/
 	
 	
 	/*** START CONSTRUCTORS ***/
-	public Server(){ serverId = incServerCount(); }
-	
-	public Server(String serverName){
-		this.serverId = incServerCount();
-		this.serverName = serverName;
-	}
-	
-	public Server(String serverName, String serverIp){
-		this.serverId = incServerCount();
-		this.serverName = serverName;
-		this.serverIp = serverIp;
-	}
+	public Server(int id){ super(id); }
+	public Server(String name){ super(name); }
+	public Server(int id, String name){ super(id, name); }
+	public Server(String name, String ip){ super(name); serverIp = ip; }
+	public Server(int id, String name, String ip){ super(id, name);	this.serverIp = ip;	}
 	/*** END CONSTRUCTORS ***/
 	
 	
 	/*** START METHODS ***/
-	public int getServerId() { return serverId; }
-	
-	public String getServerName() { return serverName; }
-	public void setServerName(String serverName) { this.serverName = serverName; }
-	
-	public String getServerIp() { return serverIp; }
+	public int getServerId() { return this.getEntityId(); }
+	public void setServerId(int id){ this.setEntityId(id); }
+	public String getServerName() { return this.getEntityName(); }
+	public void setServerName(String name) { this.setEntityName(name); }
+	public String getServerIp() { return this.serverIp; }
 	public void setServerIp(String serverIp) { this.serverIp = serverIp; }
-	
-	public List<Program> getProgramList() { return programList; }
+	public List<Program> getProgramList() { return this.programList; }
 	public void setProgramList(List<Program> programList) {	this.programList = programList;	}
-	
 	public void addProgram(Program p) {	this.programList.add(p); }
 	
-	public int incServerCount(){ return ++numServers; }
-	
 	public void printServer(){
-		System.out.println("SID:\t" + getServerId());
-		System.out.println("Name:\t" + getServerName());
-		System.out.println("IP:\t" + getServerIp() + "\n");
-		
+		System.out.print("Server ");
+		super.printEntity();
+		System.out.println("IP Address:\t" + this.getServerIp());
+		System.out.println("\nINSTALLED PROGRAMS:");
 		for(Program p : programList){
 			p.printProgram();
 		}
+		System.out.println("\n------------------------------------------------\n");
 	}
 	
 	/*
@@ -68,22 +53,26 @@ public class Server {
 	/*** START MAIN ***/
 	public static void main(String args[]){
 		
-		Server serv1 = new Server("Server1", "127.0.0.1");
-		
 		Program progA = new Program("ProgramA");
 		Program progB = new Program("ProgramB");
+		Program progC = new Program("ProgramC");
+		Program progD = new Program("ProgramD");
 		
+		Server serv1 = new Server("Server1", "127.0.0.1");
 		serv1.addProgram(progA);
 		serv1.addProgram(progB);
+		serv1.addProgram(progD);
 		
-		Server serv2 = new Server();
-		serv2.setServerName("Server2");
+		Server serv2 = new Server("Server2");
 		serv2.setServerIp("127.0.0.2");
-		
 		serv2.addProgram(progB);
+		serv2.addProgram(progC);
+		
+		Server serv3 = new Server("Server3", "127.0.0.3");
 		
 		serv1.printServer();
 		serv2.printServer();
+		serv3.printServer();
 	}
 	/*** END MAIN ***/	
 }
